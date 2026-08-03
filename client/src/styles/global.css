@@ -1,0 +1,997 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+
+  background:linear-gradient(
+    -45deg,
+    #020024,
+    #001f54,
+    #00509d,
+    #00a8e8,
+    #90e0ef
+  );
+
+  background-size:400% 400%;
+  animation:oceanFlow 15s ease infinite;
+}
+
+@keyframes oceanFlow{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  50%{
+    background-position:100% 50%;
+  }
+
+  100%{
+    background-position:0% 50%;
+  }
+}
+
+/* Floating Lights */
+
+body::before{
+  content:"";
+
+  position:fixed;
+  inset:0;
+
+  background:
+  radial-gradient(circle at 15% 20%,
+  rgba(255,255,255,.12),
+  transparent 250px),
+
+  radial-gradient(circle at 85% 30%,
+  rgba(255,255,255,.08),
+  transparent 280px),
+
+  radial-gradient(circle at 70% 80%,
+  rgba(255,255,255,.06),
+  transparent 300px);
+
+  pointer-events:none;
+  z-index:-1;
+}
+
+.container{
+  padding-top:40px;
+  padding-bottom:40px;
+}
+
+/* =======================
+   GLASS CARD
+======================= */
+
+.glass-card{
+
+  position:relative;
+  overflow:hidden;
+
+  background:
+  rgba(255,255,255,.12);
+
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+
+  border:
+  1px solid rgba(255,255,255,.18);
+
+  border-radius:30px;
+
+  padding:30px;
+
+  color:white;
+
+  box-shadow:
+  0 15px 40px rgba(0,0,0,.25);
+
+  transition:.5s ease;
+
+  animation:fadeUp .8s ease;
+}
+
+.glass-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:250px;
+  height:250px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  border-radius:50%;
+
+  top:-120px;
+  right:-120px;
+}
+
+.glass-card::after{
+
+  content:"";
+
+  position:absolute;
+
+  top:-150%;
+  left:-150%;
+
+  width:250%;
+  height:250%;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.12),
+    transparent
+  );
+
+  transform:rotate(25deg);
+
+  transition:1.2s;
+}
+
+.glass-card:hover::after{
+
+  top:100%;
+  left:100%;
+}
+
+.glass-card:hover{
+
+  transform:
+  translateY(-8px);
+
+  box-shadow:
+  0 25px 60px rgba(0,0,0,.35);
+}
+
+/* =======================
+   HEADER
+======================= */
+
+.dashboard-header{
+
+  padding:40px;
+  position:relative;
+}
+
+.dashboard-header h1{
+
+  font-size:3rem;
+  font-weight:800;
+
+  margin-bottom:10px;
+}
+
+.dashboard-header p{
+
+  color:
+  rgba(255,255,255,.85);
+
+  font-size:1.1rem;
+}
+
+.dashboard-header::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:300px;
+  height:300px;
+
+  border-radius:50%;
+
+  background:
+  rgba(255,255,255,.06);
+
+  right:-120px;
+  top:-120px;
+}
+
+/* =======================
+   SUMMARY CARDS
+======================= */
+
+.summary-card{
+
+  min-height:190px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  animation:floatCard 4s ease-in-out infinite;
+}
+
+.summary-card h5{
+
+  color:
+  rgba(255,255,255,.9);
+
+  margin-bottom:15px;
+
+  font-size:1rem;
+}
+
+.summary-card h2{
+
+  font-size:2.7rem;
+  font-weight:800;
+}
+
+.summary-card:hover{
+
+  transform:
+  translateY(-10px)
+  scale(1.03);
+}
+
+@keyframes floatCard{
+
+  0%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-8px);
+  }
+
+  100%{
+    transform:translateY(0);
+  }
+}
+
+/* =======================
+   FORM
+======================= */
+
+.expense-form-card{
+
+  margin-top:25px;
+}
+
+.expense-form-card h2{
+
+  color:white;
+  margin-bottom:20px;
+}
+
+.expense-form input,
+.expense-form select{
+
+  width:100%;
+
+  padding:15px;
+
+  border:none;
+  outline:none;
+
+  border-radius:15px;
+
+  margin-bottom:15px;
+
+  background:
+  rgba(255,255,255,.95);
+
+  transition:.3s;
+}
+
+.expense-form input:focus,
+.expense-form select:focus{
+
+  transform:scale(1.02);
+
+  box-shadow:
+  0 0 20px rgba(255,255,255,.35);
+}
+
+/* =======================
+   BUTTONS
+======================= */
+
+.add-btn{
+
+  width:100%;
+
+  padding:14px;
+
+  border:none;
+
+  border-radius:15px;
+
+  font-weight:700;
+
+  color:white;
+
+  cursor:pointer;
+
+  background:
+  linear-gradient(
+    135deg,
+    #00d4ff,
+    #0077ff
+  );
+
+  transition:.3s;
+}
+
+.add-btn:hover{
+
+  transform:
+  translateY(-3px);
+
+  box-shadow:
+  0 12px 30px rgba(0,119,255,.45);
+}
+
+.logout-btn{
+
+  border:none;
+
+  padding:12px 25px;
+
+  border-radius:15px;
+
+  color:white;
+
+  font-weight:600;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff416c,
+    #ff4b2b
+  );
+
+  transition:.3s;
+}
+
+.logout-btn:hover{
+
+  transform:scale(1.05);
+
+  box-shadow:
+  0 10px 25px rgba(255,75,43,.4);
+}
+
+/* =======================
+   TABLE
+======================= */
+
+.expense-table{
+
+  margin-top:25px;
+}
+
+.expense-table table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+  overflow:hidden;
+
+  border-radius:20px;
+}
+
+.expense-table th{
+
+  background:
+  rgba(255,255,255,.15);
+
+  color:white;
+
+  padding:16px;
+}
+
+.expense-table td{
+
+  padding:16px;
+
+  color:white;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.12);
+}
+
+.expense-table tbody tr{
+
+  transition:.3s;
+}
+
+.expense-table tbody tr:hover{
+
+  background:
+  rgba(255,255,255,.08);
+
+  transform:scale(1.01);
+}
+
+/* =======================
+   PIE CHART
+======================= */
+
+.chart-card{
+
+  min-height:450px;
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+
+@keyframes fadeUp{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(40px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0);
+  }
+}
+
+/* =======================
+   SCROLLBAR
+======================= */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+
+  background:
+  linear-gradient(
+    #00d4ff,
+    #0077ff
+  );
+
+  border-radius:20px;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+
+@media(max-width:992px){
+
+  .dashboard-header h1{
+    font-size:2.4rem;
+  }
+
+  .summary-card h2{
+    font-size:2rem;
+  }
+}
+
+@media(max-width:768px){
+
+  .dashboard-header{
+    text-align:center;
+  }
+
+  .dashboard-header h1{
+    font-size:2rem;
+  }
+
+  .glass-card{
+    padding:20px;
+  }
+
+  .logout-btn{
+    width:100%;
+    margin-top:15px;
+  }
+}
+
+@media(max-width:576px){
+
+  .dashboard-header h1{
+    font-size:1.6rem;
+  }
+
+  .dashboard-header p{
+    font-size:.95rem;
+  }
+
+  .summary-card{
+    min-height:150px;
+  }
+
+  .summary-card h2{
+    font-size:1.7rem;
+  }
+}
+body::after{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    background-image:
+    radial-gradient(
+        rgba(255,255,255,0.15) 2px,
+        transparent 2px
+    );
+
+    background-size:80px 80px;
+
+    animation:particleMove 30s linear infinite;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+@keyframes particleMove{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-200px);
+    }
+}
+.glass-card:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.01);
+
+    box-shadow:
+    0 0 25px rgba(0,212,255,0.4),
+    0 0 50px rgba(0,212,255,0.2),
+    0 25px 60px rgba(0,0,0,0.3);
+}
+.dashboard-header h1{
+
+    font-size:3rem;
+
+    font-weight:800;
+
+    background:
+    linear-gradient(
+        90deg,
+        white,
+        #90e0ef,
+        white
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:textGlow 4s linear infinite;
+}
+
+@keyframes textGlow{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+.summary-card{
+
+    cursor:pointer;
+}
+
+.summary-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+
+    opacity:0;
+
+    transition:.5s;
+}
+
+.summary-card:hover::after{
+
+    opacity:1;
+}
+.summary-number{
+
+    animation:pulseValue 2s infinite;
+}
+
+@keyframes pulseValue{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+input::placeholder{
+    color:rgba(255,255,255,0.7);
+}
+.add-btn{
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.add-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+
+    transition:.7s;
+}
+
+.add-btn:hover::before{
+
+    left:100%;
+}
+.expense-table tbody tr{
+
+    animation:fadeRow .5s ease;
+}
+
+@keyframes fadeRow{
+
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+.logout-btn{
+
+    animation:floatBtn 3s ease-in-out infinite;
+}
+
+@keyframes floatBtn{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+}
+.glass-card{
+
+    transform-style:preserve-3d;
+}
+
+.glass-card:hover{
+
+    transform:
+    perspective(1000px)
+    rotateX(2deg)
+    rotateY(2deg)
+    translateY(-10px);
+}
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.particles span{
+
+    position:absolute;
+
+    display:block;
+
+    width:10px;
+    height:10px;
+
+    background:
+    rgba(255,255,255,0.7);
+
+    border-radius:50%;
+
+    box-shadow:
+    0 0 10px white,
+    0 0 20px #90e0ef;
+
+    animation:fall linear infinite;
+}
+
+.particles span:nth-child(1){
+    left:5%;
+    animation-duration:12s;
+    animation-delay:0s;
+}
+
+.particles span:nth-child(2){
+    left:15%;
+    width:15px;
+    height:15px;
+    animation-duration:16s;
+}
+
+.particles span:nth-child(3){
+    left:25%;
+    animation-duration:10s;
+}
+
+.particles span:nth-child(4){
+    left:35%;
+    animation-duration:18s;
+}
+
+.particles span:nth-child(5){
+    left:50%;
+    width:12px;
+    height:12px;
+    animation-duration:13s;
+}
+
+.particles span:nth-child(6){
+    left:60%;
+    animation-duration:20s;
+}
+
+.particles span:nth-child(7){
+    left:70%;
+    width:14px;
+    height:14px;
+    animation-duration:11s;
+}
+
+.particles span:nth-child(8){
+    left:80%;
+    animation-duration:17s;
+}
+
+.particles span:nth-child(9){
+    left:90%;
+    animation-duration:14s;
+}
+
+.particles span:nth-child(10){
+    left:95%;
+    animation-duration:19s;
+}
+
+@keyframes fall{
+
+    0%{
+        transform:
+        translateY(-100px)
+        translateX(0);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    50%{
+        transform:
+        translateY(50vh)
+        translateX(30px);
+    }
+
+    100%{
+        transform:
+        translateY(110vh)
+        translateX(-30px);
+
+        opacity:0;
+    }
+}
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    bottom:0;
+    left:0;
+
+    width:200%;
+    height:200px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border-radius:
+    50% 50% 0 0;
+
+    animation:waveMove 12s linear infinite;
+
+    z-index:-1;
+}
+
+@keyframes waveMove{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+}
+.orb{
+
+    position:fixed;
+
+    width:300px;
+    height:300px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    filter:blur(50px);
+
+    animation:floatOrb 12s infinite ease-in-out;
+
+    z-index:-1;
+}
+
+.orb1{
+    top:10%;
+    left:10%;
+}
+
+.orb2{
+    bottom:10%;
+    right:10%;
+}
+
+@keyframes floatOrb{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-50px);
+    }
+}
+.glass-card:hover{
+
+    box-shadow:
+    0 0 30px rgba(0,255,255,0.3),
+    0 0 60px rgba(0,255,255,0.15),
+    0 25px 50px rgba(0,0,0,0.3);
+}
+.wave-bg{
+    position:fixed;
+    bottom:0;
+    left:0;
+
+    width:200%;
+    height:250px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border-radius:
+    50% 50% 0 0;
+
+    animation:
+    waveMove 12s linear infinite;
+
+    z-index:-2;
+}
+
+.wave-bg::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:
+    rgba(0,212,255,0.08);
+
+    border-radius:
+    50% 50% 0 0;
+
+    animation:
+    waveMoveReverse 18s linear infinite;
+}
+
+@keyframes waveMove{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+@keyframes waveMoveReverse{
+
+    from{
+        transform:translateX(-50%);
+    }
+
+    to{
+        transform:translateX(0);
+    }
+}
