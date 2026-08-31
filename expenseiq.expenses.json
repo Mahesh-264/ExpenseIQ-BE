@@ -1,0 +1,105 @@
+[{
+  "_id": {
+    "$oid": "6a3ad3c3740bf152f59d888b"
+  },
+  "userId": {
+    "$oid": "6a3a9a628c3fd7c3da26b685"
+  },
+  "title": "biryani",
+  "amount": 250,
+  "category": "Food",
+  "date": {
+    "$date": "2026-06-23T18:43:15.084Z"
+  },
+  "createdAt": {
+    "$date": "2026-06-23T18:43:15.099Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-23T18:43:15.099Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a94fdf3dd5f633af1fab52d"
+  },
+  "userId": {
+    "$oid": "6a94fbfddd5f633af1fab52c"
+  },
+  "title": "Iphone",
+  "amount": 1000000,
+  "category": "Other",
+  "date": {
+    "$date": "2026-08-31T04:07:15.986Z"
+  },
+  "createdAt": {
+    "$date": "2026-08-31T04:07:15.989Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:07:15.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a95025b0fd6baafd64f0222"
+  },
+  "userId": {
+    "$oid": "6a95025b0fd6baafd64f0221"
+  },
+  "title": "Alice Lunch",
+  "amount": 450,
+  "category": "Food",
+  "date": {
+    "$date": "2026-08-31T04:26:03.860Z"
+  },
+  "createdAt": {
+    "$date": "2026-08-31T04:26:03.862Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:26:03.862Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a95035e0fd6baafd64f0225"
+  },
+  "userId": {
+    "$oid": "6a9502e70fd6baafd64f0224"
+  },
+  "title": "Supermarket Groceries",
+  "amount": 1850,
+  "category": "Food",
+  "date": {
+    "$date": "2026-08-31T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-08-31T04:30:22.253Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:30:22.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a9504540fd6baafd64f0226"
+  },
+  "userId": {
+    "$oid": "6a9502e70fd6baafd64f0224"
+  },
+  "title": "Internet Bill",
+  "amount": 950,
+  "category": "Bills",
+  "date": {
+    "$date": "2026-08-31T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-08-31T04:34:28.478Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:34:28.478Z"
+  },
+  "__v": 0
+}]

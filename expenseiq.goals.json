@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "6a3a9602aecb2368a142eb1a"
+  },
+  "goalName": "Buy Laptop",
+  "targetAmount": 70000,
+  "monthlySaving": 5000,
+  "createdAt": {
+    "$date": "2026-06-23T14:19:46.415Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-23T14:19:46.415Z"
+  },
+  "__v": 0
+}]

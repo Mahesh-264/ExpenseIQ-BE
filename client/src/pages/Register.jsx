@@ -1,101 +1,190 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import { FiUser, FiMail, FiLock, FiArrowRight, FiShield, FiTrendingUp } from "react-icons/fi";
 
 function Register() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: ""
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     });
+    if (error) setError("");
+  };
 
-    const handleChange = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.password) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
 
-    const handleSubmit = async (e) => {
+    setLoading(true);
+    setError("");
 
-        e.preventDefault();
+    try {
+      const res = await API.post("/auth/register", formData);
+      
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+      if (res.data.user) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
 
-        try {
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            await API.post("/auth/register", formData);
+  return (
+    <div className="d-flex align-items-center justify-content-center min-vh-100 px-3 py-5">
+      <div className="w-100" style={{ maxWidth: "440px" }}>
+        
+        {/* Brand Header */}
+        <div className="text-center mb-4">
+          <div 
+            className="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+            style={{
+              width: "56px",
+              height: "56px",
+              background: "linear-gradient(135deg, #10b981, #6366f1)",
+              boxShadow: "0 0 25px rgba(16, 185, 129, 0.4)"
+            }}
+          >
+            <FiTrendingUp size={28} color="#fff" />
+          </div>
+          <h1 className="h3 fw-bold text-gradient mb-1">Join ExpenseIQ</h1>
+          <p className="text-muted small">Start tracking your personalized expenses intelligently</p>
+        </div>
 
-            alert("Registration Successful");
+        {/* Register Card */}
+        <div className="iq-card">
+          <h2 className="h5 fw-semibold text-white mb-2">Create New Account</h2>
+          <p className="text-muted small mb-4">Your personal expenses and data will stay completely private to you.</p>
 
-            navigate("/");
+          {error && (
+            <div 
+              className="p-3 mb-4 rounded-3 d-flex align-items-center gap-2"
+              style={{
+                background: "rgba(244, 63, 94, 0.12)",
+                border: "1px solid rgba(244, 63, 94, 0.3)",
+                color: "#fda4af",
+                fontSize: "0.88rem"
+              }}
+            >
+              <FiShield />
+              <span>{error}</span>
+            </div>
+          )}
 
-        } catch (error) {
-
-            alert(error.response?.data?.message || "Registration Failed");
-        }
-    };
-
-    return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-
-            <div className="glass-card" style={{ width: "450px" }}>
-
-                <h2 className="text-center mb-4">
-                    Register
-                </h2>
-
-                <form onSubmit={handleSubmit}>
-
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        className="form-control mb-3"
-                        onChange={handleChange}
-                    />
-
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        className="form-control mb-3"
-                        onChange={handleChange}
-                    />
-
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        className="form-control mb-3"
-                        onChange={handleChange}
-                    />
-
-                    <button className="btn btn-light w-100">
-                        Register
-                    </button>
-
-                </form>
-
-                <p className="mt-3 text-center">
-
-                    Already have an account?
-
-                    <Link
-                        to="/"
-                        className="ms-2 text-white"
-                    >
-                        Login
-                    </Link>
-
-                </p>
-
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label text-muted small fw-medium mb-1">Full Name</label>
+              <div className="position-relative">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="e.g. John Doe"
+                  className="iq-input"
+                  style={{ paddingLeft: "42px" }}
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+                <FiUser 
+                  className="position-absolute" 
+                  style={{ left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-dim)" }} 
+                />
+              </div>
             </div>
 
+            <div className="mb-3">
+              <label className="form-label text-muted small fw-medium mb-1">Email Address</label>
+              <div className="position-relative">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="name@example.com"
+                  className="iq-input"
+                  style={{ paddingLeft: "42px" }}
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <FiMail 
+                  className="position-absolute" 
+                  style={{ left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-dim)" }} 
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="form-label text-muted small fw-medium mb-1">Password</label>
+              <div className="position-relative">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="At least 6 characters"
+                  className="iq-input"
+                  style={{ paddingLeft: "42px" }}
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <FiLock 
+                  className="position-absolute" 
+                  style={{ left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-dim)" }} 
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="iq-btn-primary w-100 py-3"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              ) : (
+                <>
+                  <span>Create Free Account</span>
+                  <FiArrowRight size={18} />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+            <p className="text-muted small mb-0">
+              Already have an account?{" "}
+              <Link to="/" className="text-decoration-none fw-semibold" style={{ color: "var(--accent-primary)" }}>
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
-    );
+
+      </div>
+    </div>
+  );
 }
 
 export default Register;

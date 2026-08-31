@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "6a3acda86723e772114a1d60"
+  },
+  "name": "Mahesh",
+  "email": "mahesh@gmail.com",
+  "password": "$2b$10$QJtfKEod52BcYMzt6dbehO4K1GMXbrtChfaI6XO47BLQZ9baKd1Qu",
+  "createdAt": {
+    "$date": "2026-06-23T18:17:12.644Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-23T18:17:12.644Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a94fbfddd5f633af1fab52c"
+  },
+  "name": "BOB",
+  "email": "bob@gmail.com",
+  "password": "$2b$10$dpyR6i1b9njAwxFg6yZlS.aWzzkEhzsd6dprGn46X2SbWM/SGGQO2",
+  "createdAt": {
+    "$date": "2026-08-31T03:58:53.410Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T03:58:53.410Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a95025b0fd6baafd64f0221"
+  },
+  "name": "Alice Test",
+  "email": "test_u1_1788150363703@example.com",
+  "password": "$2b$10$hx0.YLNyytl63aFk8zbf9u/wCQblEKsAC3lCckmSwC/alExtkAgJ6",
+  "createdAt": {
+    "$date": "2026-08-31T04:26:03.844Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:26:03.844Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a95025b0fd6baafd64f0223"
+  },
+  "name": "Bob Test",
+  "email": "test_u2_1788150363703@example.com",
+  "password": "$2b$10$UIOLnRIDKfG9K0FQgnadCedm4oapViv6Q0.W57gXjN47R9349fcni",
+  "createdAt": {
+    "$date": "2026-08-31T04:26:03.928Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:26:03.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a9502e70fd6baafd64f0224"
+  },
+  "name": "Sarah Connor",
+  "email": "sarah.demo@example.com",
+  "password": "$2b$10$n3aW3/ZP/d3z801hIBA0peV69cvV86VPaY.VwBw390xXybenbZpdG",
+  "createdAt": {
+    "$date": "2026-08-31T04:28:23.881Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:28:23.881Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a9504a60fd6baafd64f0227"
+  },
+  "name": "Amshu",
+  "email": "amsu@gmail.com",
+  "password": "$2b$10$yhR0WCR4JaAAdsiu9fYHquupjwJ9Ee0pgBYDL2GIz.TduHaf62Piy",
+  "createdAt": {
+    "$date": "2026-08-31T04:35:50.174Z"
+  },
+  "updatedAt": {
+    "$date": "2026-08-31T04:35:50.174Z"
+  },
+  "__v": 0
+}]
