@@ -1,4 +1,6 @@
 const path = require("path");
+
+// Load environment variables
 require("dotenv").config({
     path: path.join(__dirname, ".env")
 });
@@ -14,21 +16,37 @@ const goalRoutes = require("./routes/goalRoutes");
 
 const app = express();
 
-connectDB();
+// ===============================
+// Middleware
+// ===============================
 
 app.use(
     cors({
         origin: "*",
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"]
     })
 );
 
 app.use(express.json());
 
+// ===============================
+// Database Connection
+// ===============================
+
+connectDB();
+
+// ===============================
+// Routes
+// ===============================
+
 app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/goal", goalRoutes);
+
+// ===============================
+// Health Check
+// ===============================
 
 app.get("/", (req, res) => {
     res.status(200).json({
@@ -37,8 +55,36 @@ app.get("/", (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+// ===============================
+// 404 Handler
+// ===============================
 
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`ExpenseIQ Backend running on port ${PORT}`);
+app.use((req, res) => {
+    res.status(404).json({
+        message: "Route not found",
+        status: "error"
+    });
 });
+
+// ===============================
+// Error Handler
+// ===============================
+
+app.use((err, req, res, next) => {
+    console.error("Server Error:", err);
+
+    res.status(err.status || 500).json({
+        message: err.message || "Internal Server Error",
+        status: "error"
+    });
+});
+
+// ===============================
+// Vercel Export
+// ===============================
+
+// IMPORTANT:
+// Do NOT use app.listen() on Vercel.
+// Vercel handles the server automatically.
+
+module.exports = app;
