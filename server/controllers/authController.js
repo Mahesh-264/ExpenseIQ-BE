@@ -1,17 +1,33 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET || "expenseiq_super_secret_jwt_key_2026";
+
+const generateToken = (user) => {
+    return jwt.sign(
+        { id: user._id, name: user.name, email: user.email },
+        JWT_SECRET,
+        { expiresIn: "30d" }
+    );
+};
 
 // REGISTER USER
 const registerUser = async (req, res) => {
     try {
-
         const { name, email, password } = req.body;
 
-        const userExists = await User.findOne({ email });
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                message: "Please fill all fields"
+            });
+        }
+
+        const userExists = await User.findOne({ email: email.toLowerCase().trim() });
 
         if (userExists) {
             return res.status(400).json({
-                message: "User already exists"
+                message: "User already exists with this email"
             });
         }
 
@@ -19,14 +35,21 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
-            name,
-            email,
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
             password: hashedPassword
         });
 
+        const token = generateToken(user);
+
         res.status(201).json({
             message: "User Registered Successfully",
-            user
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
         });
 
     } catch (error) {
@@ -39,14 +62,19 @@ const registerUser = async (req, res) => {
 // LOGIN USER
 const loginUser = async (req, res) => {
     try {
-
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Please provide email and password"
+            });
+        }
+
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
 
         if (!user) {
             return res.status(404).json({
-                message: "User not found"
+                message: "User not found with this email"
             });
         }
 
@@ -61,8 +89,11 @@ const loginUser = async (req, res) => {
             });
         }
 
+        const token = generateToken(user);
+
         res.status(200).json({
             message: "Login Successful",
+            token,
             user: {
                 id: user._id,
                 name: user.name,
