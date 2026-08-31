@@ -1,6 +1,4 @@
 const path = require("path");
-
-// Load environment variables
 require("dotenv").config({
     path: path.join(__dirname, ".env")
 });
@@ -23,7 +21,7 @@ const app = express();
 app.use(
     cors({
         origin: "*",
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization"]
     })
 );
@@ -31,31 +29,11 @@ app.use(
 app.use(express.json());
 
 // ===============================
-// Database Middleware
-// ===============================
-
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (error) {
-        console.error("Database connection failed:", error.message);
-
-        res.status(500).json({
-            message: "Database connection failed",
-            status: "error"
-        });
-    }
-});
-
-// ===============================
 // Routes
 // ===============================
 
 app.use("/api/auth", authRoutes);
-
 app.use("/api/expense", expenseRoutes);
-
 app.use("/api/goal", goalRoutes);
 
 // ===============================
@@ -70,31 +48,26 @@ app.get("/", (req, res) => {
 });
 
 // ===============================
-// 404 Handler
+// Start Server
 // ===============================
 
-app.use((req, res) => {
-    res.status(404).json({
-        message: "Route not found",
-        status: "error"
-    });
-});
+const PORT = process.env.PORT || 5000;
 
-// ===============================
-// Error Handler
-// ===============================
+const startServer = async () => {
+    try {
+        console.log("Starting ExpenseIQ Backend...");
+        console.log("PORT:", PORT);
 
-app.use((err, req, res, next) => {
-    console.error("Server Error:", err);
+        await connectDB();
 
-    res.status(err.status || 500).json({
-        message: err.message || "Internal Server Error",
-        status: "error"
-    });
-});
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`ExpenseIQ Backend running on port ${PORT}`);
+            console.log(`Local URL: http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Server startup failed:", error.message);
+        process.exit(1);
+    }
+};
 
-// ===============================
-// Vercel Export
-// ===============================
-
-module.exports = app;
+startServer();
