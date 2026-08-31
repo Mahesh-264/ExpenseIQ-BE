@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Vite
+.vite/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# MongoDB exports
+expenseiq.expenses.json
+expenseiq.goals.json
+expenseiq.users.json
