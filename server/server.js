@@ -31,17 +31,31 @@ app.use(
 app.use(express.json());
 
 // ===============================
-// Database Connection
+// Database Middleware
 // ===============================
 
-connectDB();
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error("Database connection failed:", error.message);
+
+        res.status(500).json({
+            message: "Database connection failed",
+            status: "error"
+        });
+    }
+});
 
 // ===============================
 // Routes
 // ===============================
 
 app.use("/api/auth", authRoutes);
+
 app.use("/api/expense", expenseRoutes);
+
 app.use("/api/goal", goalRoutes);
 
 // ===============================
@@ -82,9 +96,5 @@ app.use((err, req, res, next) => {
 // ===============================
 // Vercel Export
 // ===============================
-
-// IMPORTANT:
-// Do NOT use app.listen() on Vercel.
-// Vercel handles the server automatically.
 
 module.exports = app;
