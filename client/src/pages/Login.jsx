@@ -1,171 +1,135 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
-import { FiMail, FiLock, FiArrowRight, FiShield, FiTrendingUp, FiPieChart } from "react-icons/fi";
+import { FiZap, FiMail, FiLock, FiAlertCircle, FiArrowRight } from "react-icons/fi";
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
     if (error) setError("");
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      setError("Please fill in both email and password.");
-      return;
-    }
-
+    if (!form.email || !form.password) { setError("Please fill in both fields."); return; }
     setLoading(true);
-    setError("");
-
     try {
-      const res = await API.post("/auth/login", formData);
-      
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-      }
-      if (res.data.user) {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-      }
-
+      const res = await API.post("/auth/login", form);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+      setError(err.response?.data?.message || "Login failed. Check your credentials.");
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center min-vh-100 px-3 py-5">
-      <div className="w-100" style={{ maxWidth: "440px" }}>
-        
-        {/* Brand Header */}
-        <div className="text-center mb-4">
-          <div 
-            className="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
-            style={{
-              width: "56px",
-              height: "56px",
-              background: "linear-gradient(135deg, #6366f1, #3b82f6)",
-              boxShadow: "0 0 25px rgba(99, 102, 241, 0.4)"
-            }}
+    <div className="auth-page">
+      {/* Decorative orbs */}
+      <div style={{
+        position: "fixed", top: "15%", left: "10%", width: "320px", height: "320px",
+        borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
+        filter: "blur(40px)", pointerEvents: "none"
+      }} />
+      <div style={{
+        position: "fixed", bottom: "20%", right: "8%", width: "280px", height: "280px",
+        borderRadius: "50%", background: "radial-gradient(circle, rgba(34,211,238,0.1), transparent 70%)",
+        filter: "blur(40px)", pointerEvents: "none"
+      }} />
+
+      <div className="auth-card" style={{ position: "relative" }}>
+        {/* Brand */}
+        <div style={{ marginBottom: "28px" }}>
+          <div className="auth-brand-icon">
+            <FiZap size={26} color="#fff" />
+          </div>
+          <h1 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#e8edf5", letterSpacing: "-0.03em", marginBottom: "6px" }}>
+            Welcome back
+          </h1>
+          <p style={{ fontSize: "0.9rem", color: "#6b7a96" }}>
+            Sign in to your ExpenseIQ account
+          </p>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className="auth-error">
+            <FiAlertCircle size={16} style={{ flexShrink: 0, marginTop: "1px" }} />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div className="field-group">
+            <label className="field-label">Email address</label>
+            <div className="input-icon-wrap">
+              <FiMail size={16} />
+              <input
+                type="email" name="email" placeholder="you@example.com"
+                className="iq-input" value={form.email} onChange={onChange} required
+              />
+            </div>
+          </div>
+
+          <div className="field-group">
+            <label className="field-label">Password</label>
+            <div className="input-icon-wrap">
+              <FiLock size={16} />
+              <input
+                type="password" name="password" placeholder="••••••••"
+                className="iq-input" value={form.password} onChange={onChange} required
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit" className="iq-btn-primary w-100"
+            style={{ padding: "14px", fontSize: "0.95rem", marginTop: "6px" }}
+            disabled={loading}
           >
-            <FiTrendingUp size={28} color="#fff" />
-          </div>
-          <h1 className="h3 fw-bold text-gradient mb-1">ExpenseIQ</h1>
-          <p className="text-muted small">Intelligent Personal Expense & Spending Analytics</p>
+            {loading ? (
+              <><div className="iq-spinner" /><span>Signing in…</span></>
+            ) : (
+              <><span>Sign In</span><FiArrowRight size={18} /></>
+            )}
+          </button>
+        </form>
+
+        {/* Divider */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: "12px",
+          margin: "22px 0", color: "#3d4a5e", fontSize: "0.8rem"
+        }}>
+          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.06)" }} />
+          New to ExpenseIQ?
+          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.06)" }} />
         </div>
 
-        {/* Login Card */}
-        <div className="iq-card">
-          <h2 className="h5 fw-semibold text-white mb-2">Welcome Back</h2>
-          <p className="text-muted small mb-4">Enter your credentials to access your financial dashboard.</p>
+        <Link
+          to="/register"
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            gap: "8px", padding: "12px",
+            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)",
+            borderRadius: "14px", color: "#a8b3c7", fontSize: "0.88rem",
+            fontWeight: 500, textDecoration: "none", transition: "all 0.2s ease"
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "#e8edf5"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.color = "#a8b3c7"; }}
+        >
+          Create a free account →
+        </Link>
 
-          {error && (
-            <div 
-              className="p-3 mb-4 rounded-3 d-flex align-items-center gap-2"
-              style={{
-                background: "rgba(244, 63, 94, 0.12)",
-                border: "1px solid rgba(244, 63, 94, 0.3)",
-                color: "#fda4af",
-                fontSize: "0.88rem"
-              }}
-            >
-              <FiShield />
-              <span>{error}</span>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label text-muted small fw-medium mb-1">Email Address</label>
-              <div className="position-relative">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="name@example.com"
-                  className="iq-input"
-                  style={{ paddingLeft: "42px" }}
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                <FiMail 
-                  className="position-absolute" 
-                  style={{ left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-dim)" }} 
-                />
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label className="form-label text-muted small fw-medium mb-1">Password</label>
-              <div className="position-relative">
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="••••••••"
-                  className="iq-input"
-                  style={{ paddingLeft: "42px" }}
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <FiLock 
-                  className="position-absolute" 
-                  style={{ left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-dim)" }} 
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="iq-btn-primary w-100 py-3"
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              ) : (
-                <>
-                  <span>Sign In to Dashboard</span>
-                  <FiArrowRight size={18} />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
-            <p className="text-muted small mb-0">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-decoration-none fw-semibold" style={{ color: "var(--accent-primary)" }}>
-                Create an account
-              </Link>
-            </p>
-          </div>
-        </div>
-
-        {/* Security / Privacy badge */}
-        <div className="text-center mt-4">
-          <span className="badge rounded-pill text-muted px-3 py-2" style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)", fontSize: "0.75rem" }}>
-            🔒 End-to-End User Data Isolation & JWT Encrypted
-          </span>
-        </div>
-
+        {/* Security note */}
+        <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.73rem", color: "#3d4a5e" }}>
+          🔐 Secured with JWT · Data scoped per user
+        </p>
       </div>
     </div>
   );
 }
-
-export default Login;

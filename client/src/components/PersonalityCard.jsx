@@ -38,7 +38,9 @@ function PersonalityCard({ personality, prediction }) {
           >
             <FiCpu size={18} />
           </div>
-          <span className="text-muted small text-uppercase fw-semibold">AI Spending Persona & Predictive Forecast</span>
+          <span style={{ color: "#b0bec5", fontSize: "0.72rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.07em" }}>
+            AI Spending Persona &amp; Predictive Forecast
+          </span>
         </div>
         <span className="iq-badge iq-badge-purple">
           ✨ Powered by ExpenseIQ Intelligence
@@ -50,18 +52,18 @@ function PersonalityCard({ personality, prediction }) {
           <div className="d-flex align-items-center gap-3 mb-2">
             <span style={{ fontSize: "2rem" }}>{personality?.badge || "🧠"}</span>
             <div>
-              <h4 className="h4 fw-bold text-white mb-0">{personality?.personality || "Smart Analyst"}</h4>
-              <p className="text-muted small mb-0">{personality?.reason || "Tracking your financial habits"}</p>
+              <h4 className="h4 fw-bold mb-0" style={{ color: "#f1f5f9" }}>{personality?.personality || "Smart Analyst"}</h4>
+              <p className="mb-0" style={{ color: "#b0bec5", fontSize: "0.88rem" }}>{personality?.reason || "Tracking your financial habits"}</p>
             </div>
           </div>
 
           <div 
             className="p-3 rounded-3 mt-3 d-flex align-items-start gap-2"
-            style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)" }}
+            style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
           >
             <FiCheckCircle style={{ color: theme.color, marginTop: "2px", flexShrink: 0 }} />
-            <p className="small text-muted mb-0">
-              <strong className="text-white">AI Advice:</strong> {theme.tip}
+            <p className="mb-0" style={{ fontSize: "0.87rem", color: "#b0bec5" }}>
+              <strong style={{ color: "#f1f5f9" }}>AI Advice:</strong> {theme.tip}
             </p>
           </div>
         </div>
@@ -71,17 +73,17 @@ function PersonalityCard({ personality, prediction }) {
             className="p-3 rounded-3"
             style={{ 
               background: "rgba(6, 182, 212, 0.08)", 
-              border: "1px solid rgba(6, 182, 212, 0.2)" 
+              border: "1px solid rgba(6, 182, 212, 0.25)" 
             }}
           >
             <div className="d-flex align-items-center justify-content-between mb-1">
-              <span className="text-cyan small fw-medium" style={{ color: "#67e8f9" }}>3-Month Projected Spend</span>
+              <span style={{ color: "#67e8f9", fontSize: "0.82rem", fontWeight: 600 }}>3-Month Projected Spend</span>
               <FiTrendingUp style={{ color: "#67e8f9" }} />
             </div>
-            <div className="h3 fw-bold text-white mono-number mb-1">
+            <div className="h3 fw-bold mono-number mb-1" style={{ color: "#f1f5f9" }}>
               ₹{Number(prediction?.threeMonthPrediction || 0).toLocaleString()}
             </div>
-            <p className="text-muted small mb-0" style={{ fontSize: "0.78rem" }}>
+            <p className="mb-0" style={{ color: "#8899aa", fontSize: "0.78rem" }}>
               {prediction?.message || "Estimated future velocity based on active logs."}
             </p>
           </div>

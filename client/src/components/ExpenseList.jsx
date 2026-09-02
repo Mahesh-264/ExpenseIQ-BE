@@ -58,8 +58,8 @@ function ExpenseList({ expenses = [], onExpenseDeleted, showToast }) {
       <div className="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
         <div className="d-flex align-items-center gap-2">
           <FiList className="text-primary" size={20} />
-          <h3 className="h6 fw-bold text-white mb-0">Transaction History</h3>
-          <span className="badge rounded-pill bg-secondary bg-opacity-25 text-white ms-1 px-2 py-1" style={{ fontSize: "0.75rem" }}>
+          <h3 className="h6 fw-bold mb-0" style={{ color: "#f1f5f9" }}>Transaction History</h3>
+          <span className="badge rounded-pill px-2 py-1 ms-1" style={{ background: "rgba(255,255,255,0.08)", color: "#b0bec5", fontSize: "0.72rem" }}>
             {filtered.length}
           </span>
         </div>
@@ -88,7 +88,7 @@ function ExpenseList({ expenses = [], onExpenseDeleted, showToast }) {
             key={cat}
             type="button"
             className={`category-pill py-1 px-3 ${selectedCategory === cat ? "active" : ""}`}
-            style={{ fontSize: "0.8rem", whiteSpace: "nowrap" }}
+            style={{ fontSize: "0.8rem", whiteSpace: "nowrap", color: selectedCategory === cat ? "#a5b4fc" : "#b0bec5" }}
             onClick={() => setSelectedCategory(cat)}
           >
             {cat !== "All" && CATEGORY_MAP[cat]?.icon} {cat}
